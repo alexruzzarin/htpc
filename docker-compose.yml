@@ -1,0 +1,100 @@
+version: '2'
+
+services:
+  plex:
+    image: linuxserver/plex
+    restart: unless-stopped
+    environment:
+      - VERSION=latest
+      - PUID=1000
+      - PGID=994
+      - TZ='America/Buenos_aires'
+    network_mode: "host"
+    volumes:
+      - ./config/plex:/config
+      - ../data/videos/transcode:/transcode
+      - ../data/videos/tv:/data/tv
+      - ../data/videos/movies:/data/movies
+      - ../data/videos/demo:/data/demo
+  sonarr:
+    image: linuxserver/sonarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+    ports:
+      - "8989:8989"
+    volumes:
+      - /dev/rtc:/dev/rtc:ro
+      - ./config/sonarr:/config
+      - ../data/videos/tv:/tv
+      - ../data/download:/downloads
+    depends_on:
+      - deluge
+  couchpotato:
+    image: linuxserver/couchpotato
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+      - TZ='America/Buenos_aires'
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./config/couchpotato:/config
+      - ../data/videos/movies:/movies
+      - ../data/download:/downloads
+    depends_on:
+      - deluge
+  deluge:
+    image: linuxserver/deluge
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+      - TZ='America/Buenos_aires'
+    network_mode: "host"
+    volumes:
+      - ./config/deluge:/config
+      - ../data/download:/downloads
+  muximux:
+    image: linuxserver/muximux
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+      - TZ='America/Buenos_aires'
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/muximux:/config
+    depends_on:
+      - plex
+      - deluge
+      - sonarr
+      - couchpotato
+      - htpcmanager
+  htpcmanager:
+    image: linuxserver/htpcmanager
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+      - TZ='America/Buenos_aires'
+    ports:
+      - "8085:8085"
+    volumes:
+      - ./config/htpcmanager:/config
+    depends_on:
+      - plex
+      - deluge
+      - sonarr
+      - couchpotato
+  cloudcmd:
+    image: coderaiser/cloudcmd
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ~:/root
+      - /media:/mnt/fs

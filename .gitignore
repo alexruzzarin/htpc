@@ -1,0 +1,10 @@
+*.jpg
+*.nfo
+*.mkv
+*.str
+*.ini
+*.tmp
+*.__wz_cache
+*.log
+*.zip
+*.torrent
