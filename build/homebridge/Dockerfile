@@ -12,5 +12,5 @@ USER root
 ADD image/run.sh /root/run.sh
 VOLUME /root/.homebridge
 
-EXPOSE 5353/udp 51826 51828
+EXPOSE 5353 51826 51828
 CMD ["/root/run.sh"]
