@@ -104,7 +104,6 @@ services:
       dockerfile: ./Dockerfile
     image: alexruzzarin/homebridge
     restart: unless-stopped
-    network_mode: "host"
     ports:
       - "5353:5353"
       - "5353:5353/udp"
