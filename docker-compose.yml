@@ -98,3 +98,10 @@ services:
     volumes:
       - ~:/root
       - ./data:/mnt/fs
+  homebridge:
+    build:
+      context: ./build/homebridge
+      dockerfile: ./Dockerfile
+    image: alexruzzarin/homebridge
+    restart: unless-stopped
+    network_mode: "host"
