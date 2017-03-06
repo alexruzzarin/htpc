@@ -18,10 +18,10 @@ find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir yarn \;
 
 # rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
 
-dbus-daemon --system
-# avahi-daemon -D
+dbus-daemon --system --nofork
+avahi-daemon --no-chroot -D
 
-service dbus start
+# service dbus start
 # service avahi-daemon start
 
 homebridge -P $plugin_folder

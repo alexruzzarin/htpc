@@ -2,7 +2,7 @@ FROM node:latest
 MAINTAINER Alex Ruzzarin <alex@ruzzarin.net>
 
 RUN apt-get update; \
-    apt-get install -y --no-install-recommends libnss-mdns libavahi-compat-libdnssd-dev; \
+    apt-get install -y --no-install-recommends libnss-mdns libavahi-compat-libdnssd-dev avahi-daemon dbus; \
     yarn global add node-gyp && \
     yarn global add homebridge
 
