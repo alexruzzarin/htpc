@@ -5,6 +5,8 @@
 /config/plex
 /config/sonarr
 /data
+node_modules
+yarn.lock
 *.jpg
 *.png
 *.nfo
