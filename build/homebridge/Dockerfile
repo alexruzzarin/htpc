@@ -3,7 +3,7 @@ MAINTAINER Alex Ruzzarin <alex@ruzzarin.net>
 
 RUN mkdir -p /var/run/dbus \
     && apk add --no-cache \
-        make gcc g++ python avahi-dev dbus-dev \
+        make gcc g++ python avahi-dev avahi-compat-libdns_sd dbus-dev \
     && yarn global add node-gyp \
     && yarn global add homebridge
 
