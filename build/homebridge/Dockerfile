@@ -4,7 +4,8 @@ MAINTAINER Alex Ruzzarin <alex@ruzzarin.net>
 RUN mkdir -p /var/run/dbus && \
     apt-get update; \
     apt-get install -y --no-install-recommends libnss-mdns avahi-discover libavahi-compat-libdnssd-dev; \
-    yarn global add node-gyp homebridge
+    yarn global add node-gyp && \
+    yarn global add homebridge
 
 USER root
 
