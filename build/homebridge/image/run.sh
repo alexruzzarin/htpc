@@ -3,6 +3,8 @@
 sed -i 's/rlimit-nproc=3/#rlimit-nproc=3/' /etc/avahi/avahi-daemon.conf
 
 install_file="/root/.homebridge/install.sh"
+plugin_folder="/root/.homebridge/plugins"
+
 if [ -f "$install_file" ]
 then
     echo "Executing $install_file."
@@ -20,4 +22,4 @@ dbus-daemon --system
 service dbus start
 # service avahi-daemon start
 
-homebridge
+homebridge -P $plugin_folder

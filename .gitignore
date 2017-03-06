@@ -1,4 +1,9 @@
-/config
+/config/couchpotato
+/config/deluge
+/config/htpcmanager
+/config/muximux
+/config/plex
+/config/sonarr
 /data
 *.jpg
 *.png

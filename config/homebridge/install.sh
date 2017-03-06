@@ -1,1 +1,1 @@
-yarn global add homebridge-yamaha homebridge-people
+yarn global add homebridge-people

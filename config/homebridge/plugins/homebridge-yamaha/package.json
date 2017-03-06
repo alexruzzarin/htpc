@@ -1,0 +1,37 @@
+{
+  "name": "homebridge-yamaha",
+  "version": "0.0.1",
+  "description": "homebridge-plugin for Yamaha AVR https://github.com/nfarina/homebridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexruzzarin/homebridge-yamaha.git"
+  },
+  "preferGlobal": true,
+  "keywords": [
+    "homebridge-plugin",
+    "YamahaAVR",
+    "Yamaha"
+  ],
+  "engines": {
+   "node": ">=7",
+   "homebridge": ">=0.2.5"
+ },
+
+  "dependencies": {
+    "yamaha-nodejs": "0.4.x",
+    "q": "1.4.x",
+    "debug": "^2.2.0",
+    "util": "^0.10.x"
+
+  },
+  "author": "Alex Ruzzarin <alex@ruzzarin.net> (https://github.com/alexruzzarin)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neonightmare/homebridge-yamaha/issues"
+  },
+  "homepage": "https://github.com/neonightmare/homebridge-yamaha#readme"
+}

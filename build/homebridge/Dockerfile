@@ -12,5 +12,5 @@ ADD image/run.sh /root/run.sh
 VOLUME /root/.homebridge
 VOLUME /var/run/dbus
 
-EXPOSE 5353 5353/udp 51826 51828
+EXPOSE 51826 51828
 CMD ["/root/run.sh"]
