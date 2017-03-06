@@ -1,0 +1,47 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "AA:BB:CC:DD:EE:FF",
+        "port": 51826,
+        "pin": "123-45-678"
+    },
+
+    "platforms": [
+        {
+            "platform": "People",
+            "threshold" : 15,
+            "anyoneSensor" : true,
+            "nooneSensor" : false,
+            "webhookPort": 51828,
+            "cacheDirectory": "./.node-persist/storage",
+            "pingInterval": 10000,
+            "ignoreReEnterExitSeconds": 0,
+            "people" : [
+                {
+                    "name" : "Alex",
+                    "target" : "Alexs-iPhone-2",
+                    "threshold" : 15,
+                    "pingInterval": 10000,
+                    "ignoreReEnterExitSeconds": 0
+                },
+                {
+                    "name" : "Susy",
+                    "target" : "Susys-iPhone",
+                    "threshold" : 15,
+                    "pingInterval": 10000,
+                    "ignoreReEnterExitSeconds": 0
+                }
+            ]
+        },
+        {
+            "platform": "YamahaAVR",
+            "play_volume": -36,
+            "setMainInputTo": "Apple TV",
+            "manual_addresses": {
+                "Yamaha": "192.168.1.3"
+            }
+        }
+    ],
+    "accessories": [
+    ]
+}
