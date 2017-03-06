@@ -16,6 +16,7 @@ services:
       - ./data/videos/tv:/data/tv
       - ./data/videos/movies:/data/movies
       - ./data/videos/demo:/data/demo
+      - /var/run/dbus:/var/run/dbus
   sonarr:
     image: linuxserver/sonarr
     restart: unless-stopped
@@ -104,10 +105,14 @@ services:
       dockerfile: ./Dockerfile
     image: alexruzzarin/homebridge
     restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
     ports:
-      - "5353:5353"
-      - "5353:5353/udp"
       - "51826:51826"
       - "51828:51828"
     volumes:
       - ./config/homebridge:/root/.homebridge
+      - /var/run/dbus:/var/run/dbus
+    depends_on:
+      - plex
