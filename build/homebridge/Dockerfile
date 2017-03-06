@@ -1,11 +1,10 @@
-FROM node:alpine
+FROM node:latest
 MAINTAINER Alex Ruzzarin <alex@ruzzarin.net>
 
-RUN mkdir -p /var/run/dbus \
-    && apk add --no-cache \
-        make gcc g++ python avahi-dev avahi-compat-libdns_sd dbus-dev \
-    && yarn global add node-gyp \
-    && yarn global add homebridge
+RUN mkdir -p /var/run/dbus && \
+    apt-get update; \
+    apt-get install -y --no-install-recommends libnss-mdns avahi-discover libavahi-compat-libdnssd-dev; \
+    yarn global add node-gyp homebridge
 
 USER root
 

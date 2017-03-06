@@ -1,9 +1,6 @@
 #!/bin/bash
 
-sed -i 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf
-
-dbus-daemon --system
-avahi-daemon -D
+sed -i 's/rlimit-nproc=3/#rlimit-nproc=3/' /etc/avahi/avahi-daemon.conf
 
 install_file="/root/.homebridge/install.sh"
 if [ -f "$install_file" ]
@@ -14,5 +11,13 @@ then
 else
     echo "$install_file not found."
 fi
+
+rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
+
+dbus-daemon --system
+avahi-daemon -D
+
+service dbus start
+service avahi-daemon start
 
 homebridge
