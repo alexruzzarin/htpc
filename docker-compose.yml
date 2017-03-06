@@ -105,5 +105,10 @@ services:
     image: alexruzzarin/homebridge
     restart: unless-stopped
     network_mode: "host"
+    ports:
+      - "5353:5353"
+      - "5353:5353/udp"
+      - "51826:51826"
+      - "51828:51828"
     volumes:
       - ./config/homebridge:/root/.homebridge
