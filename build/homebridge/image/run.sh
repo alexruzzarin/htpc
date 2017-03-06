@@ -14,6 +14,8 @@ else
     echo "$install_file not found."
 fi
 
+find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir yarn \;
+
 # rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
 
 dbus-daemon --system
