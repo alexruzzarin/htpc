@@ -97,4 +97,4 @@ services:
       - "8000:8000"
     volumes:
       - ~:/root
-      - /media:/mnt/fs
+      - ./data:/mnt/fs
