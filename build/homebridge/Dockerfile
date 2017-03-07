@@ -10,7 +10,6 @@ USER root
 
 ADD image/run.sh /root/run.sh
 VOLUME /root/.homebridge
-VOLUME /var/run/dbus
 
 EXPOSE 51826 51828
 CMD ["/root/run.sh"]

@@ -9,14 +9,19 @@ services:
       - PUID=1000
       - PGID=994
       - TZ='America/Buenos_aires'
-    network_mode: "host"
+    ports:
+      - "32400:32400"
+      - "32400:32400/udp"
+      - "32469:32469"
+      - "32469:32469/udp"
+      - "5353:5353/udp"
+      - "1900:1900/udp"
     volumes:
       - ./config/plex:/config
       - ./data/videos/transcode:/transcode
       - ./data/videos/tv:/data/tv
       - ./data/videos/movies:/data/movies
       - ./data/videos/demo:/data/demo
-      - /var/run/dbus:/var/run/dbus
   sonarr:
     image: linuxserver/sonarr
     restart: unless-stopped
@@ -54,7 +59,13 @@ services:
       - PUID=1000
       - PGID=994
       - TZ='America/Buenos_aires'
-    network_mode: "host"
+    ports:
+      - "8112:8112"
+      - "58846:58846"
+      - "58946:58946"
+      - "58946:58946/udp"
+      - "61337:61337"
+      - "61337:61337/udp"
     volumes:
       - ./config/deluge:/config
       - ./data/download:/downloads
@@ -113,6 +124,5 @@ services:
       - "51828:51828"
     volumes:
       - ./config/homebridge:/root/.homebridge
-      - /var/run/dbus:/var/run/dbus
     depends_on:
       - plex
