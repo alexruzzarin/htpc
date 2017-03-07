@@ -1,7 +1,8 @@
 FROM node:latest
 MAINTAINER Alex Ruzzarin <alex@ruzzarin.net>
 
-RUN apt-get update; \
+RUN mkdir -p /var/run/dbus
+    apt-get update; \
     apt-get install -y --no-install-recommends libnss-mdns libavahi-compat-libdnssd-dev avahi-daemon dbus; \
     yarn global add node-gyp && \
     yarn global add homebridge

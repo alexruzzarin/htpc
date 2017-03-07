@@ -16,7 +16,7 @@ fi
 
 find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir yarn \;
 
-# rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
+rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
 
 dbus-daemon --system --nofork
 avahi-daemon --no-chroot -D
