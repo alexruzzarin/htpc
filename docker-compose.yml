@@ -16,6 +16,7 @@ services:
       - "32469:32469/udp"
       - "5353:5353/udp"
       - "1900:1900/udp"
+      - "33400:33400"
     volumes:
       - ./config/plex:/config
       - ./data/videos/transcode:/transcode
