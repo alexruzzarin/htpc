@@ -7,9 +7,14 @@ RUN apt-get update; \
     yarn global add homebridge && \
     mkdir -p /var/run/dbus
 
+COPY image/avahi-daemon.conf /etc/avahi/avahi-daemon.conf
+
 USER root
 
+RUN mkdir -p /var/run/dbus
+
 ADD image/run.sh /root/run.sh
+
 VOLUME /root/.homebridge
 
 EXPOSE 51826 51828

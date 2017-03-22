@@ -21,9 +21,9 @@ echo "Removing dbus PID file"
 rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
 
 echo "Starting dbus"
-dbus-daemon --system --nofork
+dbus-daemon --system
 echo "Starting avahi"
-avahi-daemon --no-chroot -D
+avahi-daemon -D
 
 # service dbus start
 # service avahi-daemon start
