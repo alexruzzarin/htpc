@@ -17,16 +17,5 @@ fi
 echo "Installing plugins ($plugin_folder) modules"
 find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir yarn \;
 
-echo "Removing dbus PID file"
-rm -f /var/run/dbus/pid /var/run/avahi-daemon/pid
-
-echo "Starting dbus"
-dbus-daemon --system
-echo "Starting avahi"
-avahi-daemon -D
-
-# service dbus start
-# service avahi-daemon start
-
 echo "Starting homebridge"
-homebridge -P $plugin_folder
+homebridge -D -P $plugin_folder
