@@ -1,28 +1,6 @@
 version: '3'
 
 services:
-  plex:
-    image: linuxserver/plex
-    restart: unless-stopped
-    environment:
-      - VERSION=latest
-      - PUID=1000
-      - PGID=994
-      - TZ='America/Buenos_aires'
-    ports:
-      - "32400:32400"
-      - "32400:32400/udp"
-      - "32469:32469"
-      - "32469:32469/udp"
-      - "192.168.1.2:5353:5353/udp"
-      - "1900:1900/udp"
-      - "33400:33400"
-    volumes:
-      - ./config/plex:/config
-      - ./data/videos/transcode:/transcode
-      - ./data/videos/tv:/data/tv
-      - ./data/videos/movies:/data/movies
-      - ./data/videos/demo:/data/demo
   sonarr:
     image: linuxserver/sonarr
     restart: unless-stopped
@@ -82,7 +60,7 @@ services:
     volumes:
       - ./config/muximux:/config
     depends_on:
-      - plex
+      - plex-homebridge
       - deluge
       - sonarr
       - couchpotato
@@ -99,7 +77,7 @@ services:
     volumes:
       - ./config/htpcmanager:/config
     depends_on:
-      - plex
+      - plex-homebridge
       - deluge
       - sonarr
       - couchpotato
@@ -111,20 +89,30 @@ services:
     volumes:
       - ~:/root
       - ./data:/mnt/fs
-  homebridge:
+  plex-homebridge:
     build:
       context: ./build/homebridge
       dockerfile: ./Dockerfile
-    image: alexruzzarin/homebridge
     restart: unless-stopped
     environment:
+      - VERSION=latest
       - PUID=1000
       - PGID=994
+      - TZ='America/Buenos_aires'
     ports:
-      - "192.168.1.8:5353:5353/udp"
+      - "32400:32400"
+      - "32400:32400/udp"
+      - "32469:32469"
+      - "32469:32469/udp"
+      - "5353:5353/udp"
+      - "1900:1900/udp"
+      - "33400:33400"
       - "51826:51826"
       - "51828:51828"
     volumes:
+      - ./config/plex:/config
+      - ./data/videos/transcode:/transcode
+      - ./data/videos/tv:/data/tv
+      - ./data/videos/movies:/data/movies
+      - ./data/videos/demo:/data/demo
       - ./config/homebridge:/root/.homebridge
-    depends_on:
-      - plex
