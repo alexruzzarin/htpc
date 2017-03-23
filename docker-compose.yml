@@ -109,6 +109,7 @@ services:
       - "33400:33400"
       - "51826:51826"
       - "51828:51828"
+    network_mode: "host"
     volumes:
       - ./config/plex:/config
       - ./data/videos/transcode:/transcode
