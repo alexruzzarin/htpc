@@ -99,6 +99,7 @@ services:
       - PUID=1000
       - PGID=994
       - TZ='America/Buenos_aires'
+      - DEBUG=*
     ports:
       - "32400:32400"
       - "32400:32400/udp"
