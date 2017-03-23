@@ -1,9 +1,9 @@
 {
     "bridge": {
         "name": "Homebridge",
-        "username": "AA:BB:CC:DD:EE:FF",
+        "username": "AA:BB:CC:DD:EE:FE",
         "port": 51826,
-        "pin": "123-45-678"
+        "pin": "678-45-123"
     },
 
     "platforms": [
