@@ -16,4 +16,4 @@ else
 fi
 
 echo "Installing plugins ($plugin_folder) modules"
-find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir yarn \;
+find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir npm install \;

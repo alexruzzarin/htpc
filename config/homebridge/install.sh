@@ -1,1 +1,1 @@
-yarn global add homebridge-people
+npm i -g homebridge-people
