@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+
+chown -R abc:abc /homebridge-config
+
+chown abc:abc \
+	/homebridge-config \
+	/homebridge-config/*
+
+if [ -f "$install_file" ]
+then
+    echo "Executing $install_file."
+
+    sh $install_file
+else
+    echo "$install_file not found."
+fi
+
+echo "Installing plugins ($plugin_folder) modules"
+find ${plugin_folder}/* -name "package.json" -maxdepth 1 -execdir yarn \;

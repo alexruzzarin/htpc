@@ -117,4 +117,4 @@ services:
       - ./data/videos/tv:/data/tv
       - ./data/videos/movies:/data/movies
       - ./data/videos/demo:/data/demo
-      - ./config/homebridge:/root/.homebridge
+      - ./config/homebridge:/homebridge-config

@@ -21,11 +21,10 @@ RUN set -ex \
 RUN yarn global add node-gyp && \
     yarn global add homebridge
 
-USER root
 
-ADD image/run.sh /root/run.sh
+# add local files
+COPY root/ /
 
-VOLUME /root/.homebridge
-
+# ports and volumes
 EXPOSE 51826 51828
-CMD ["/root/run.sh"]
+VOLUME /homebridge-config
