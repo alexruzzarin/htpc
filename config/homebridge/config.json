@@ -13,7 +13,6 @@
             "anyoneSensor" : true,
             "nooneSensor" : false,
             "webhookPort": 51828,
-            "cacheDirectory": "./.node-persist/storage",
             "pingInterval": 10000,
             "ignoreReEnterExitSeconds": 0,
             "people" : [
