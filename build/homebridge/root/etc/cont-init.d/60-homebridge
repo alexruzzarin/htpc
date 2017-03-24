@@ -1,5 +1,8 @@
 #!/usr/bin/with-contenv bash
 
+install_file="/homebridge-config/install.sh"
+plugin_folder="/homebridge-config/plugins"
+
 chown -R abc:abc /homebridge-config
 
 chown abc:abc \
