@@ -3,4 +3,4 @@
 echo "Starting Homebridge."
 exec \
 	s6-setuidgid abc /bin/bash -c \
-	'homebridge -D -P $plugin_folder -U /homebridge-config'
+	'/usr/bin/homebridge -D -P $plugin_folder -U /homebridge-config'
