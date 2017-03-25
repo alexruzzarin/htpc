@@ -1,1 +1,1 @@
-npm i -g homebridge-people homebridge-meteostation
+npm i -g homebridge-people
