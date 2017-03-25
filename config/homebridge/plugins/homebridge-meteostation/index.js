@@ -70,7 +70,7 @@ HomeMeteoAccessory.prototype.getHumidity = function(callback) {
 };
 
 function getValue(url, callback) {
-  request(this.url + this.humi_url, (error, response, body) => {
+  request(url, (error, response, body) => {
     if (error || response.statusCode !== 200) {
       return callback(error);
     }
