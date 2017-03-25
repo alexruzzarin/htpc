@@ -74,7 +74,7 @@ function getValue(url, callback) {
     if (error || response.statusCode !== 200) {
       return callback(error);
     }
-    var value = parseInt(value, 10);
+    var value = parseInt(body, 10);
     return callback(null, value);
   });
 }
