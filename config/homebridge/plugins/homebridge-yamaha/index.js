@@ -21,13 +21,6 @@ var inherits = require('util').inherits;
 var debug = require('debug')('YamahaAVR');
 var Yamaha = require('yamaha-nodejs');
 var Q = require('q');
-var mdns = require('mdns');
-//workaround for raspberry pi
-var sequence = [
-    mdns.rst.DNSServiceResolve(),
-    'DNSServiceGetAddrInfo' in mdns.dns_sd ? mdns.rst.DNSServiceGetAddrInfo() : mdns.rst.getaddrinfo({families:[4]}),
-    mdns.rst.makeAddressesUnique()
-];
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -58,14 +51,11 @@ function YamahaAVRPlatform(log, config){
     this.log = log;
     this.config = config;
     this.playVolume = config["play_volume"];
-    this.minVolume = config["min_volume"] || -50.0;
-    this.maxVolume = config["max_volume"] || -20.0;
+    this.minVolume = config["min_volume"] || -42.0;
+    this.maxVolume = config["max_volume"] || -4.0;
     this.gapVolume = this.maxVolume - this.minVolume;
     this.setMainInputTo = config["setMainInputTo"];
-    this.expectedDevices = config["expected_devices"] || 100;
-    this.discoveryTimeout = config["discovery_timeout"] || 30;
     this.manualAddresses = config["manual_addresses"] || {};
-    this.browser = mdns.createBrowser(mdns.tcp('http'), {resolverSequence: sequence});
 }
 
 // Custom Characteristics and service...
@@ -110,11 +100,7 @@ YamahaAVRPlatform.prototype = {
         this.log("Getting Yamaha AVR devices.");
         var that = this;
 
-        var browser = this.browser;
-        browser.stop();
-        browser.removeAllListeners('serviceUp'); // cleanup listeners
         var accessories = [];
-        var timer, timeElapsed = 0, checkCyclePeriod = 5000;
 
         // Hmm... seems we need to prevent double-listing via manual and Bonjour...
         var sysIds = {};
@@ -137,8 +123,6 @@ YamahaAVRPlatform.prototype = {
                     this.log("Found Yamaha " + sysModel + " - " + sysId + ", \"" + name + "\"");
                     var accessory = new YamahaAVRAccessory(this.log, this.config, name, yamaha, sysConfig);
                     accessories.push(accessory);
-                    if(accessories.length >= this.expectedDevices)
-                        timeoutFunction(); // We're done, call the timeout function now.
                 }.bind(this)
                 ,
                 function(error){
@@ -157,29 +141,7 @@ YamahaAVRPlatform.prototype = {
             });
         }
 
-        browser.on('serviceUp', setupFromService);
-        browser.start();
-
-        // The callback can only be called once...so we'll have to find as many as we can
-        // in a fixed time and then call them in.
-        var timeoutFunction = function(){
-            if(accessories.length >= that.expectedDevices){
-                clearTimeout(timer);
-            } else {
-                timeElapsed += checkCyclePeriod;
-                if(timeElapsed > that.discoveryTimeout * 1000){
-                    that.log("Waited " + that.discoveryTimeout + " seconds, stopping discovery.");
-                } else {
-                    timer = setTimeout(timeoutFunction, checkCyclePeriod);
-                    return;
-                }
-            }
-            browser.stop();
-            browser.removeAllListeners('serviceUp');
-            that.log("Discovery finished, found " + accessories.length + " Yamaha AVR devices.");
-            callback(accessories);
-        };
-        timer = setTimeout(timeoutFunction, checkCyclePeriod);
+        callback(accessories);
     }
 };
 

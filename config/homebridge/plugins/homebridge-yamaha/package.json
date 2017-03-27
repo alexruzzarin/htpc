@@ -26,7 +26,6 @@
     "q": "1.4.x",
     "debug": "^2.2.0",
     "util": "^0.10.x",
-    "mdns": "^2.2.4",
     "request": "2.65.x"
   },
   "author": "Alex Ruzzarin <alex@ruzzarin.net> (https://github.com/alexruzzarin)",
