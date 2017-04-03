@@ -46,7 +46,13 @@ sun:
 
 # Weather Prediction
 sensor:
-  platform: yr
+  - platform: yr
+  - platform: sonarr
+    api_key: 604a4859ccee47579c0cb432024a627f
+    host: 192.168.1.2
+    monitored_conditions:
+      - upcoming
+    days: 2
 
 # Text to speech
 tts:
@@ -78,11 +84,3 @@ device_tracker:
     host: 192.168.1.1
     username: alex
     password: ruzz8491
-
-sensor:
-  - platform: sonarr
-    api_key: 604a4859ccee47579c0cb432024a627f
-    host: 192.168.1.2
-    monitored_conditions:
-      - upcoming
-    days: 2
