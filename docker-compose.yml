@@ -89,6 +89,14 @@ services:
     volumes:
       - ~:/root
       - ./data:/mnt/fs
+  home-assistant:
+    image: homeassistant/home-assistant
+    restart: unless-stopped
+    ports: 
+      - "8123:8123"
+    volumes: 
+      - ./config/home-assistant:/config
+      - /etc/localtime:/etc/localtime:ro
   plex-homebridge:
     build:
       context: ./build/homebridge
