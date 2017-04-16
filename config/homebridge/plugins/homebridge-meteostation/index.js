@@ -1,7 +1,7 @@
 /*jshint sub:true*/
 
-var request = require('request');
-var Service, Characteristic;
+const request = require('request');
+let Service, Characteristic;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -16,13 +16,19 @@ module.exports = function(homebridge) {
 
 function HomeMeteoAccessory(log, config) {
   this.log = log;
-  this.name = config['name'];
+  this.name = config['name'] || 'Meteostation';
   this.url = config['url'];
-  this.temp_url = config['temp_url'];
-  this.humi_url = config['humi_url'];
+  this.temp_url = config['temp_url'] || '/temperature';
+  this.humi_url = config['humi_url'] || '/humidity';
   this.freq = config['freq'] || 60000;
 
   this.services = [];
+
+  this.informationService = new Service.AccessoryInformation(this.name);
+  informationService
+    .setCharacteristic(Characteristic.Manufacturer, "Alex")
+    .setCharacteristic(Characteristic.Model, 'ESP v0')
+    .setCharacteristic(Characteristic.SerialNumber, this.url);
 
   this.temperatureService = new Service.TemperatureSensor('Temperature Sensor');
   this.temperatureService
@@ -40,17 +46,36 @@ function HomeMeteoAccessory(log, config) {
     () => {
       this.getTemperature((err, value) => {
         if (err) {
+          this.temperatureService.setCharacteristic(
+            Characteristic.StatusFault,
+            Characteristic.StatusFault.GENERAL_FAULT
+          );
           return;
         }
+
+        this.temperatureService.setCharacteristic(
+          Characteristic.StatusFault,
+          Characteristic.StatusFault.NO_FAULT
+        );
         this.temperatureService.setCharacteristic(
           Characteristic.CurrentTemperature,
           value
         );
       });
+
       this.getHumidity((err, value) => {
         if (err) {
+          this.humidityService.setCharacteristic(
+            Characteristic.StatusFault,
+            Characteristic.StatusFault.GENERAL_FAULT
+          );
           return;
         }
+
+        this.humidityService.setCharacteristic(
+            Characteristic.StatusFault,
+            Characteristic.StatusFault.NO_FAULT
+          );
         this.humidityService.setCharacteristic(
           Characteristic.CurrentRelativeHumidity,
           value
@@ -74,7 +99,7 @@ function getValue(url, callback) {
     if (error || response.statusCode !== 200) {
       return callback(error);
     }
-    var value = parseInt(body, 10);
+    const value = parseFloat(body);
     return callback(null, value);
   });
 }

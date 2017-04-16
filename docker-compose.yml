@@ -10,7 +10,7 @@ services:
     ports:
       - "8989:8989"
     volumes:
-      - /dev/rtc:/dev/rtc:ro
+      - /etc/localtime:/etc/localtime:ro
       - ./config/sonarr:/config
       - ./data/videos/tv:/tv
       - ./data/download:/downloads
