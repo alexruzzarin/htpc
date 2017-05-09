@@ -25,7 +25,7 @@ function HomeMeteoAccessory(log, config) {
   this.services = [];
 
   this.informationService = new Service.AccessoryInformation();
-  informationService
+  this.informationService
     .setCharacteristic(Characteristic.Name, this.name)
     .setCharacteristic(Characteristic.Manufacturer, 'Alex')
     .setCharacteristic(Characteristic.Model, 'ESP v0')
