@@ -24,66 +24,66 @@ function HomeMeteoAccessory(log, config) {
 
   this.services = [];
 
-  this.informationService = new Service.AccessoryInformation(this.name);
+  this.informationService = new Service.AccessoryInformation();
   informationService
-    .setCharacteristic(Characteristic.Manufacturer, "Alex")
+    .setCharacteristic(Characteristic.Name, this.name)
+    .setCharacteristic(Characteristic.Manufacturer, 'Alex')
     .setCharacteristic(Characteristic.Model, 'ESP v0')
     .setCharacteristic(Characteristic.SerialNumber, this.url);
 
-  this.temperatureService = new Service.TemperatureSensor('Temperature Sensor');
+  this.temperatureService = new Service.TemperatureSensor();
   this.temperatureService
+    .setCharacteristic(Characteristic.Name, 'Temperature Sensor')
     .getCharacteristic(Characteristic.CurrentTemperature)
     .on('get', this.getTemperature.bind(this));
   this.services.push(this.temperatureService);
 
   this.humidityService = new Service.HumiditySensor('Humidity Sensor');
   this.humidityService
+    .setCharacteristic(Characteristic.Name, 'Humidity Sensor')
     .getCharacteristic(Characteristic.CurrentRelativeHumidity)
     .on('get', this.getHumidity.bind(this));
   this.services.push(this.humidityService);
 
-  setInterval(
-    () => {
-      this.getTemperature((err, value) => {
-        if (err) {
-          this.temperatureService.setCharacteristic(
-            Characteristic.StatusFault,
-            Characteristic.StatusFault.GENERAL_FAULT
-          );
-          return;
-        }
-
+  setInterval(() => {
+    this.getTemperature((err, value) => {
+      if (err) {
         this.temperatureService.setCharacteristic(
           Characteristic.StatusFault,
-          Characteristic.StatusFault.NO_FAULT
+          Characteristic.StatusFault.GENERAL_FAULT
         );
-        this.temperatureService.setCharacteristic(
-          Characteristic.CurrentTemperature,
-          value
-        );
-      });
+        return;
+      }
 
-      this.getHumidity((err, value) => {
-        if (err) {
-          this.humidityService.setCharacteristic(
-            Characteristic.StatusFault,
-            Characteristic.StatusFault.GENERAL_FAULT
-          );
-          return;
-        }
+      this.temperatureService.setCharacteristic(
+        Characteristic.StatusFault,
+        Characteristic.StatusFault.NO_FAULT
+      );
+      this.temperatureService.setCharacteristic(
+        Characteristic.CurrentTemperature,
+        value
+      );
+    });
 
+    this.getHumidity((err, value) => {
+      if (err) {
         this.humidityService.setCharacteristic(
-            Characteristic.StatusFault,
-            Characteristic.StatusFault.NO_FAULT
-          );
-        this.humidityService.setCharacteristic(
-          Characteristic.CurrentRelativeHumidity,
-          value
+          Characteristic.StatusFault,
+          Characteristic.StatusFault.GENERAL_FAULT
         );
-      });
-    },
-    this.freq
-  );
+        return;
+      }
+
+      this.humidityService.setCharacteristic(
+        Characteristic.StatusFault,
+        Characteristic.StatusFault.NO_FAULT
+      );
+      this.humidityService.setCharacteristic(
+        Characteristic.CurrentRelativeHumidity,
+        value
+      );
+    });
+  }, this.freq);
 }
 
 HomeMeteoAccessory.prototype.getTemperature = function(callback) {
