@@ -10,7 +10,7 @@ module.exports = function(homebridge) {
   homebridge.registerAccessory(
     'homebridge-electra',
     'Electra',
-    HomeMeteoAccessory
+    ElectraAccessory
   );
 };
 
