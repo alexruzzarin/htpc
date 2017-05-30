@@ -126,3 +126,20 @@ services:
       - ./data/videos/movies:/data/movies
       - ./data/videos/demo:/data/demo
       - ./config/homebridge:/homebridge-config
+  emby:
+    image: xataz/emby
+    restart: unless-stopped
+    environment:
+      - UID=1000
+      - GID=994
+      - TZ='America/Buenos_aires'
+    ports:
+      - "8096:8096"
+    volumes:
+      - ./config/emby:/embyData
+      - ./data/videos:/Media
+    depends_on:
+      - deluge
+      - sonarr
+      - couchpotato
+      - htpcmanager
