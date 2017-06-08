@@ -138,6 +138,7 @@ services:
     volumes:
       - ./config/emby:/embyData
       - ./data/videos:/Media
+      - ./data/videos/movies:/Media/movies
     depends_on:
       - deluge
       - sonarr
