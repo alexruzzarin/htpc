@@ -110,7 +110,7 @@ services:
     network_mode: "host"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
+      # - /etc/timezone:/etc/timezone:ro
       - ./config/openhab/addons:/openhab/addons
       - ./config/openhab/conf:/openhab/conf
       - ./config/openhab/userdata:/openhab/userdata
