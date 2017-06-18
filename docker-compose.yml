@@ -89,14 +89,27 @@ services:
     volumes:
       - ~:/root
       - ./data:/mnt/fs
-  home-assistant:
-    image: homeassistant/home-assistant
+  # home-assistant:
+  #   image: homeassistant/home-assistant
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8123:8123"
+  #   volumes:
+  #     - ./config/home-assistant:/config
+  #     - /etc/localtime:/etc/localtime:ro
+  openhab:
+    image: openhab/openhab:2.0.0-amd64
     restart: unless-stopped
-    ports: 
-      - "8123:8123"
-    volumes: 
-      - ./config/home-assistant:/config
+    net: host
+    volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./config/openhab/addons:/openhab/addons
+      - ./config/openhab/conf:/openhab/conf
+      - ./config/openhab/userdata:/openhab/userdata
+    environment:
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
   plex-homebridge:
     build:
       context: ./build/homebridge
