@@ -128,23 +128,23 @@ services:
   #   volumes:
   #     - ./config/home-assistant:/config
   #     - /etc/localtime:/etc/localtime:ro
-  openhab:
-    image: openhab/openhab:2.0.0-amd64
-    restart: unless-stopped
-    environment:
-      - OPENHAB_HTTP_PORT=8080
-      - OPENHAB_HTTPS_PORT=8443
-      - USER_ID=1000
-      - LC_ALL=en_US.UTF-8
-      - LANG=en_US.UTF-8
-      - LANGUAGE=en_US.UTF-8
-    network_mode: "host"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      # - /etc/timezone:/etc/timezone:ro
-      - ./config/openhab/addons:/openhab/addons
-      - ./config/openhab/conf:/openhab/conf
-      - ./config/openhab/userdata:/openhab/userdata
+  # openhab:
+  #   image: openhab/openhab:2.0.0-amd64
+  #   restart: unless-stopped
+  #   environment:
+  #     - OPENHAB_HTTP_PORT=8080
+  #     - OPENHAB_HTTPS_PORT=8443
+  #     - USER_ID=1000
+  #     - LC_ALL=en_US.UTF-8
+  #     - LANG=en_US.UTF-8
+  #     - LANGUAGE=en_US.UTF-8
+  #   network_mode: "host"
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     # - /etc/timezone:/etc/timezone:ro
+  #     - ./config/openhab/addons:/openhab/addons
+  #     - ./config/openhab/conf:/openhab/conf
+  #     - ./config/openhab/userdata:/openhab/userdata
   plex-homebridge:
     build:
       context: ./build/homebridge
@@ -192,13 +192,13 @@ services:
       - sonarr
       - couchpotato
       - htpcmanager
-portainer:
-  image: portainer/portainer
-  container_name: portainer
-  ports:
-    - 9000:9000
-  volumes:
-    - /opt/appdata/portainer:/data
-    - /var/run/docker.sock:/var/run/docker.sock
-  restart:
-    always
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /opt/appdata/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart:
+      always
