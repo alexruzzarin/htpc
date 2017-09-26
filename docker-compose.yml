@@ -16,6 +16,21 @@ services:
       - ./data/download:/downloads
     depends_on:
       - deluge
+  radarr:
+    image: linuxserver/radarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+    ports:
+      - "7878:7878"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/radarr:/config
+      - ./data/videos/movies:/movies
+      - ./data/download:/downloads
+    depends_on:
+      - deluge
   couchpotato:
     image: linuxserver/couchpotato
     restart: unless-stopped
@@ -59,6 +74,22 @@ services:
       - "80:80"
     volumes:
       - ./config/muximux:/config
+    depends_on:
+      - plex-homebridge
+      - deluge
+      - sonarr
+      - couchpotato
+      - htpcmanager
+  organizr:
+    image: lsiocommunity/organizr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=994
+    ports:
+      - "81:80"
+    volumes:
+      - ./config/organizr:/config
     depends_on:
       - plex-homebridge
       - deluge
@@ -161,3 +192,13 @@ services:
       - sonarr
       - couchpotato
       - htpcmanager
+portainer:
+  image: portainer/portainer
+  container_name: portainer
+  ports:
+    - 9000:9000
+  volumes:
+    - /opt/appdata/portainer:/data
+    - /var/run/docker.sock:/var/run/docker.sock
+  restart:
+    always
