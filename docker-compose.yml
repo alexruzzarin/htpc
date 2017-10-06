@@ -134,6 +134,7 @@ services:
   emby:
     image: xataz/emby
     restart: unless-stopped
+    container_name: emby
     environment:
       - UID=1000
       - GID=994
@@ -161,6 +162,9 @@ services:
     image: schuellerf/geneweb
     container_name: geneweb
     restart: unless-stopped
+    environment:
+      - HOST_IP=192.168.1.107
+      - LANGUAGE=en
     ports:
       - 2316:2316
       - 2317:2317
