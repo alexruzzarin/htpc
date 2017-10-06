@@ -66,8 +66,7 @@ services:
       - plex-homebridge
       - deluge
       - sonarr
-      - couchpotato
-      - htpcmanager
+      - radarr
   cloudcmd:
     image: coderaiser/cloudcmd
     restart: unless-stopped
@@ -148,8 +147,7 @@ services:
     depends_on:
       - deluge
       - sonarr
-      - couchpotato
-      - htpcmanager
+      - radarr
   portainer:
     image: portainer/portainer
     container_name: portainer
