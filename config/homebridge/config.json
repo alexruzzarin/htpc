@@ -18,7 +18,7 @@
             "people" : [
                 {
                     "name" : "Alex",
-                    "target" : "Alexs-iPhone-2",
+                    "target" : "Alexs-iPhone",
                     "threshold" : 15,
                     "pingInterval": 10000,
                     "ignoreReEnterExitSeconds": 0
@@ -37,7 +37,7 @@
             "play_volume": -36,
             "setMainInputTo": "Apple TV",
             "manual_addresses": {
-                "Yamaha RX-V577 Living": "192.168.1.3"
+                "Yamaha RX-V577 Living": "192.168.0.3"
             },
             "expected_devices": 1
         }
@@ -46,7 +46,7 @@
         {
             "accessory": "HomeMeteo",
             "name": "Meteostation",
-            "url": "http://192.168.1.7",
+            "url": "http://192.168.0.20",
             "temp_url": "/temperature",
             "humi_url": "/humidity",
             "light_url": "",

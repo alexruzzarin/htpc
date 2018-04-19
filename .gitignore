@@ -1,8 +1,7 @@
-/config/couchpotato
 /config/deluge
-/config/htpcmanager
-/config/muximux
-/config/plex
+/config/emby
+/config/organizr
+/config/radarr
 /config/sonarr
 /data
 node_modules

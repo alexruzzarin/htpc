@@ -33,6 +33,39 @@ services:
       - ./data/download:/downloads
     depends_on:
       - deluge
+  lidarr:
+    image: linuxserver/lidarr
+    restart: unless-stopped
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=994
+    ports:
+      - "8686:8686"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/lidarr:/config
+      - ./data/sound/music:/music
+      - ./data/download:/downloads
+    depends_on:
+      - deluge
+  ombi:
+    image: linuxserver/ombi
+    restart: unless-stopped
+    container_name: ombi
+    environment:
+      - PUID=1000
+      - PGID=994
+      - TZ='America/Argentina/Buenos_Aires'
+    ports:
+      - "3579:3579"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/ombi:/config
+    depends_on:
+      - sonarr
+      - radarr
+      - lidarr
   deluge:
     image: linuxserver/deluge
     restart: unless-stopped
@@ -63,10 +96,10 @@ services:
     volumes:
       - ./config/organizr:/config
     depends_on:
-      - plex-homebridge
       - deluge
       - sonarr
       - radarr
+      - lidarr
   cloudcmd:
     image: coderaiser/cloudcmd
     restart: unless-stopped
@@ -76,79 +109,25 @@ services:
     volumes:
       - ~:/root
       - ./data:/mnt/fs
-  # home-assistant:
-  #   image: homeassistant/home-assistant
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8123:8123"
-  #   volumes:
-  #     - ./config/home-assistant:/config
-  #     - /etc/localtime:/etc/localtime:ro
-  # openhab:
-  #   image: openhab/openhab:2.0.0-amd64
-  #   restart: unless-stopped
-  #   environment:
-  #     - OPENHAB_HTTP_PORT=8080
-  #     - OPENHAB_HTTPS_PORT=8443
-  #     - USER_ID=1000
-  #     - LC_ALL=en_US.UTF-8
-  #     - LANG=en_US.UTF-8
-  #     - LANGUAGE=en_US.UTF-8
-  #   network_mode: "host"
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     # - /etc/timezone:/etc/timezone:ro
-  #     - ./config/openhab/addons:/openhab/addons
-  #     - ./config/openhab/conf:/openhab/conf
-  #     - ./config/openhab/userdata:/openhab/userdata
-  plex-homebridge:
-    build:
-      context: ./build/homebridge
-      dockerfile: ./Dockerfile
-    restart: unless-stopped
-    container_name: plex-homebridge
-    environment:
-      - VERSION=latest
-      - PUID=1000
-      - PGID=994
-      - TZ='America/Buenos_aires'
-      - DEBUG=*
-    ports:
-      - "32400:32400"
-      - "32400:32400/udp"
-      - "32469:32469"
-      - "32469:32469/udp"
-      - "5353:5353/udp"
-      - "1900:1900/udp"
-      - "33400:33400"
-      - "51826:51826"
-      - "51828:51828"
-    network_mode: "host"
-    volumes:
-      - ./config/plex:/config
-      - ./data/videos/transcode:/transcode
-      - ./data/videos/tv:/data/tv
-      - ./data/videos/movies:/data/movies
-      - ./data/videos/demo:/data/demo
-      - ./config/homebridge:/homebridge-config
   emby:
-    image: xataz/emby
+    image: emby/embyserver
     restart: unless-stopped
     container_name: emby
     environment:
       - UID=1000
       - GID=994
-      - TZ='America/Buenos_aires'
+      - GIDLIST=91
+      - TZ='America/Argentina/Buenos_Aires'
     ports:
       - "8096:8096"
+      - "8920:8920"
     volumes:
-      - ./config/emby:/embyData
-      - ./data/videos:/Media
-      - ./data/videos/movies:/Media/movies
-    depends_on:
-      - deluge
-      - sonarr
-      - radarr
+      - ./config/emby:/config
+      - ./data/sound:/mnt/sound
+      - ./data/videos:/mnt/videos
+      - ./data/videos/movies:/mnt/videos/movies
+    devices:
+      - "/dev/dri/renderD128:/dev/dri/renderD128"
   portainer:
     image: portainer/portainer
     container_name: portainer
@@ -158,16 +137,3 @@ services:
     volumes:
       - /opt/appdata/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
-  geneweb:
-    image: schuellerf/geneweb
-    container_name: geneweb
-    restart: unless-stopped
-    environment:
-      - HOST_IP=192.168.1.107
-      - LANGUAGE=en
-    ports:
-      - 2316:2316
-      - 2317:2317
-    volumes:
-      - ./config/geneweb:/genewebData
-
