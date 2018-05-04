@@ -1,6 +1,8 @@
 /config/deluge
 /config/emby
 /config/homebridge
+/config/lidarr
+/config/omby
 /config/organizr
 /config/radarr
 /config/sonarr
