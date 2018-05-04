@@ -121,8 +121,8 @@ services:
     ports:
       - "8096:8096"
       - "8920:8920"
-      - "7359/udp:7359/udp"
-      - "1900/udp:1900/udp"
+      - "7359:7359/udp"
+      - "1900:1900/udp"
     volumes:
       - ./config/emby:/config
       - ./data/sound:/mnt/sound
