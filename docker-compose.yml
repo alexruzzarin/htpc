@@ -131,7 +131,7 @@ services:
     devices:
       - "/dev/dri/renderD128:/dev/dri/renderD128"
     links:
-      - emby-reg
+      - emby-reg:mb3admin.com
   portainer:
     image: portainer/portainer
     container_name: portainer
