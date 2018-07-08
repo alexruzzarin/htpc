@@ -130,6 +130,8 @@ services:
       - ./data/videos/movies:/mnt/videos/movies
     devices:
       - "/dev/dri/renderD128:/dev/dri/renderD128"
+    links:
+      - emby-reg
   portainer:
     image: portainer/portainer
     container_name: portainer
@@ -139,3 +141,10 @@ services:
     volumes:
       - /opt/appdata/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
+  emby-reg:
+    build: ./build/emby-reg
+    restart: unless-stopped
+    container_name: mb3admin.com
+    ports:
+      - 443:8443
+      - 808:8080
