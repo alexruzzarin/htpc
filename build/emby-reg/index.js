@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const http = require('http');
+// const http = require('http');
 const https = require('https');
 
 const privateKey = fs.readFileSync('cert/emby-reg.key', 'utf8');
@@ -27,8 +27,8 @@ app.all("/*", function (req, res) {
   });
 });
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(80);
+// httpServer.listen(80);
 httpsServer.listen(443);

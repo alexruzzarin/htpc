@@ -147,4 +147,3 @@ services:
     container_name: mb3admin.com
     ports:
       - "443:443"
-      - "808:80"
